@@ -17,6 +17,16 @@ public class Review {
     @Field
     private Double rating;
     @Field
+    private Double taste;
+    @Field
+    private Double nose;
+    @Field
+    private Double mouthfeel;
+    @Field
+    private Double value;
+    @Field
+    private Double availability;
+    @Field
     private String content;
 
     public Review(){}
@@ -24,11 +34,61 @@ public class Review {
     public Review(@JsonProperty("id") String id,
                   @JsonProperty("name") String name,
                   @JsonProperty("rating") Double rating,
+                  @JsonProperty("taste") Double taste,
+                  @JsonProperty("nose") Double nose,
+                  @JsonProperty("mouthfeel") Double mouthfeel,
+                  @JsonProperty("value") Double value,
+                  @JsonProperty("availability") Double availability,
                   @JsonProperty("content") String content){
         this.id = id;
         this.name = name;
         this.rating = rating;
+        this.taste = taste;
+        this.nose = nose;
+        this.mouthfeel = mouthfeel;
+        this.value = value;
+        this.availability = availability;
         this.content = content;
+    }
+
+    public Double getTaste() {
+        return taste;
+    }
+
+    public void setTaste(Double taste) {
+        this.taste = taste;
+    }
+
+    public Double getNose() {
+        return nose;
+    }
+
+    public void setNose(Double nose) {
+        this.nose = nose;
+    }
+
+    public Double getMouthfeel() {
+        return mouthfeel;
+    }
+
+    public void setMouthfeel(Double mouthfeel) {
+        this.mouthfeel = mouthfeel;
+    }
+
+    public Double getValue() {
+        return value;
+    }
+
+    public void setValue(Double value) {
+        this.value = value;
+    }
+
+    public Double getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(Double availability) {
+        this.availability = availability;
     }
 
     public String getId() {
