@@ -28,6 +28,10 @@ public class Review {
     private Double availability;
     @Field
     private String content;
+    @Field
+    private String Profile_id;
+    @Field
+    private String Bourbon_id;
 
     public Review(){}
 
@@ -39,7 +43,9 @@ public class Review {
                   @JsonProperty("mouthfeel") Double mouthfeel,
                   @JsonProperty("value") Double value,
                   @JsonProperty("availability") Double availability,
-                  @JsonProperty("content") String content){
+                  @JsonProperty("content") String content,
+                  @JsonProperty("Profile_id") String Profile_id,
+                  @JsonProperty("Bourbon_id") String Bourbon_id){
         this.id = id;
         this.name = name;
         this.rating = rating;
@@ -49,6 +55,24 @@ public class Review {
         this.value = value;
         this.availability = availability;
         this.content = content;
+        this.Profile_id = Profile_id;
+        this.Bourbon_id = Bourbon_id;
+    }
+
+    public String getProfile_id() {
+        return Profile_id;
+    }
+
+    public void setProfile_id(String profile_id) {
+        Profile_id = profile_id;
+    }
+
+    public String getBourbon_id() {
+        return Bourbon_id;
+    }
+
+    public void setBourbon_id(String bourbon_id) {
+        Bourbon_id = bourbon_id;
     }
 
     public Double getTaste() {

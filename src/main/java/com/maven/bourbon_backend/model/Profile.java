@@ -5,6 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.List;
+
 @Document
 public class Profile {
 
@@ -13,13 +15,15 @@ public class Profile {
     @Field
     private String name;
 
+
     public Profile(){}
 
     public Profile (@JsonProperty("id") String id,
-                    @JsonProperty("name") String name) {
+                    @JsonProperty("name") String name){
         this.id = id;
         this.name = name;
     }
+
 
     public String getId() {
         return id;
