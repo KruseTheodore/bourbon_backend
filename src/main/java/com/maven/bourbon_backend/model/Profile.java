@@ -14,16 +14,27 @@ public class Profile {
     private String id;
     @Field
     private String name;
+    @Field
+    private List<String> bourbon_ids;
 
 
     public Profile(){}
 
     public Profile (@JsonProperty("id") String id,
-                    @JsonProperty("name") String name){
+                    @JsonProperty("name") String name,
+                    @JsonProperty("bourbon_ids") List<String> bourbon_ids){
         this.id = id;
         this.name = name;
+        this.bourbon_ids = bourbon_ids;
     }
 
+    public List<String> getBourbon_ids() {
+        return bourbon_ids;
+    }
+
+    public void setBourbon_ids(List<String> bourbon_ids) {
+        this.bourbon_ids = bourbon_ids;
+    }
 
     public String getId() {
         return id;

@@ -1,5 +1,6 @@
 package com.maven.bourbon_backend.api;
 
+import com.maven.bourbon_backend.model.Bourbon;
 import com.maven.bourbon_backend.model.Profile;
 import com.maven.bourbon_backend.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,10 @@ public class ProfileController {
     @PutMapping(path = "{id}")
     public void updateProfileById(@PathVariable String id, @RequestBody Profile profile){
         profileService.updateProfileById(id, profile);
+    }
+    @GetMapping(path = "/bourbons/{id}")
+    public List<Optional<Bourbon>> getBourbonsOnProfile(@PathVariable("id") String id){
+        return profileService.getBourbonsOnProfile(profileService.getProfileById(id).orElse(null));
     }
 
 }
