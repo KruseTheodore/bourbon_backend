@@ -48,4 +48,9 @@ public class ProfileController {
         return profileService.getBourbonsOnProfile(profileService.getProfileById(id).orElse(null));
     }
 
+    @GetMapping(path = "/profiles/{id}")
+    public List<Profile> getProfilesByBourbon(@PathVariable("id") String id){
+        return profileService.getAllProfilesForABourbon(id);
+    }
+
 }

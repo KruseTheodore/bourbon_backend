@@ -51,4 +51,8 @@ public class ProfileService {
         }
         return bourbons;
     }
+
+    public List<Profile> getAllProfilesForABourbon (String id){
+        return profileRepository.findByBourbonIDs(id);
+    }
 }

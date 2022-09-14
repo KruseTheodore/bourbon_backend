@@ -14,7 +14,7 @@ public class Profile {
     private String id;
     @Field
     private String name;
-    @Field
+    @Field("bourbon_ids")
     private List<String> bourbon_ids;
 
 
