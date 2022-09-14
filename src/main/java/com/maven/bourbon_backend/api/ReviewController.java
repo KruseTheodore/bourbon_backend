@@ -7,6 +7,7 @@ import com.maven.bourbon_backend.service.ReviewService;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.Style;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,6 +54,16 @@ public class ReviewController {
     @GetMapping(path = "/bourbon/{id}")
     public Optional<Bourbon> getBourbonBeingReviewed(@PathVariable("id") String id){
         return reviewService.getBourbonBeingReviewed(reviewService.getReviewById(id).orElse(null));
+    }
+
+    @GetMapping(path = "/profiles/{id}")
+    public List<Review> getAllReviewsByProfile(@PathVariable("id") String id){
+        return reviewService.getAllReviewsByProfile(id);
+    }
+
+    @GetMapping(path = "/bourbons/{id}")
+    public List<Review> getAllReviewsByBourbon(@PathVariable("id")String id){
+        return reviewService.getAllReviewsByBourbon(id);
     }
 
 }

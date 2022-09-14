@@ -28,9 +28,9 @@ public class Review {
     private Double availability;
     @Field
     private String content;
-    @Field
+    @Field("Profile_id")
     private String Profile_id;
-    @Field
+    @Field("Bourbon_id")
     private String Bourbon_id;
 
     public Review(){}

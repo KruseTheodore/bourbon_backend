@@ -53,5 +53,13 @@ public class ReviewService {
         return bourbonService.getBourbonByName(review.getBourbon_id());
     }
 
+    public List<Review> getAllReviewsByProfile(String profile_id){
+        return reviewRepository.findAllReviewsByProfile(profile_id);
+    }
+
+    public List<Review> getAllReviewsByBourbon(String bourbon_name){
+        return reviewRepository.findAllReviewsByBourbon(bourbon_name);
+    }
+
 
 }
