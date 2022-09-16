@@ -10,6 +10,9 @@ import java.util.List;
 @Repository("MongoProfile")
 public interface ProfileRepository extends MongoRepository<Profile, String> {
 
+    @Query
+    Profile findByName(String name);
+
     @Query(value = "{'bourbon_ids':'?0'}")
     List<Profile> findByBourbonIDs(String bourbon_id);
 
