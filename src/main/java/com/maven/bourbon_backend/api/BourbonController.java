@@ -3,6 +3,8 @@ package com.maven.bourbon_backend.api;
 import com.maven.bourbon_backend.model.Bourbon;
 import com.maven.bourbon_backend.service.BourbonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +27,9 @@ public class BourbonController {
     }
 
     @GetMapping
-    public List<Bourbon> getAllBourbons(){
-        return bourbonService.getAllBourbons();
+    public ResponseEntity<List<Bourbon>> getAllBourbons(){
+        List<Bourbon> bourbons = bourbonService.getAllBourbons();
+        return new ResponseEntity<>(bourbons, HttpStatus.OK) ;
     }
 
     @GetMapping(path = "{name}")

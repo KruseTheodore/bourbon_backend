@@ -7,8 +7,10 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maven.bourbon_backend.model.Bourbon;
 import com.maven.bourbon_backend.model.Profile;
+import com.maven.bourbon_backend.model.RefreshToken;
 import com.maven.bourbon_backend.model.Role;
 import com.maven.bourbon_backend.service.ProfileService;
+import com.maven.bourbon_backend.service.RefreshService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.springframework.http.HttpHeaders.ACCESS_CONTROL_REQUEST_HEADERS;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -28,9 +31,12 @@ public class ProfileController {
 
     private final ProfileService profileService;
 
+    private final RefreshService refreshService;
+
     @Autowired
-    public ProfileController(ProfileService profileService) {
+    public ProfileController(ProfileService profileService, RefreshService refreshService) {
         this.profileService = profileService;
+        this.refreshService = refreshService;
     }
 
     @PostMapping(path ="/role")
@@ -72,24 +78,30 @@ public class ProfileController {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try{
-                String  refresh_token = authorizationHeader.substring("Bearer ".length());
-                Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
-                JWTVerifier verifier = JWT.require(algorithm).build();
-                DecodedJWT decodedJWT = verifier.verify(refresh_token);
-                String username = decodedJWT.getSubject();
-                Profile profile = profileService.getProfileByName(username);
-                String access_token = JWT.create()
-                        .withSubject(profile.getName())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
-                        .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles", profile.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
-                        .sign(algorithm);
+                String  refresh_string = authorizationHeader.substring("Bearer ".length());
+                RefreshToken refreshToken = new RefreshToken(refresh_string);
+                if(refreshService.checkToken(refreshToken)) {
+                    Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+                    JWTVerifier verifier = JWT.require(algorithm).build();
+                    DecodedJWT decodedJWT = verifier.verify(refresh_string);
+                    String username = decodedJWT.getSubject();
+                    Profile profile = profileService.getProfileByName(username);
+                    String access_token = JWT.create()
+                            .withSubject(profile.getName())
+                            .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
+                            .withIssuer(request.getRequestURL().toString())
+                            .withClaim("roles", profile.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
+                            .sign(algorithm);
 
-                Map<String, String> tokens = new HashMap<>();
-                tokens.put("access_token", access_token);
-                tokens.put("refresh_token", refresh_token);
-                response.setContentType(APPLICATION_JSON_VALUE);
-                new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+                    Map<String, String> tokens = new HashMap<>();
+                    tokens.put("access_token", access_token);
+                    tokens.put("refresh_token", refresh_string);
+                    response.setContentType(APPLICATION_JSON_VALUE);
+                    new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+                }
+                else{
+                    new ObjectMapper().writeValue(response.getOutputStream(), "User Logged Out");
+                }
             }
             catch (Exception exception){
                 response.setHeader("Error", exception.getMessage());
@@ -100,6 +112,21 @@ public class ProfileController {
                 new ObjectMapper().writeValue(response.getOutputStream(), error);
             }
 
+        }
+        else {
+            throw new RuntimeException("No refresh token given.");
+        }
+    }
+
+    @GetMapping(path = "/logout")
+    public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        String authorizationHeader = request.getHeader(ACCESS_CONTROL_REQUEST_HEADERS);
+        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+                String  refresh_string = authorizationHeader.substring("Bearer ".length());
+                RefreshToken refreshToken = new RefreshToken(refresh_string);
+                if(refreshService.checkToken(refreshToken)) {
+                    refreshService.deleteToken(refreshToken);
+                }
         }
         else {
             throw new RuntimeException("No refresh token given.");

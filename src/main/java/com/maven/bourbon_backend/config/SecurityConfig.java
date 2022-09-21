@@ -3,6 +3,7 @@ package com.maven.bourbon_backend.config;
 
 import com.maven.bourbon_backend.filter.CustomAuthenticationFilter;
 import com.maven.bourbon_backend.filter.CustomAuthorizationFilter;
+import com.maven.bourbon_backend.service.RefreshService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,10 +23,12 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final RefreshService refreshService;
 
-    public SecurityConfig(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public SecurityConfig(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder, RefreshService refreshService) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.refreshService = refreshService;
     }
 
     @Override
@@ -38,11 +41,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.authorizeRequests().antMatchers("/BourbonCommunityReviews/profile/refresh").permitAll();
+        http.authorizeRequests().antMatchers("/BourbonCommunityReviews/profile/logout").permitAll();
+        http.authorizeRequests().antMatchers("/BourbonCommunityReviews/bourbon").permitAll();
         http.authorizeRequests().antMatchers(GET, "/BourbonCommunityReviews/profile").hasAnyAuthority("User");
         http.authorizeRequests().antMatchers(GET, "/BourbonCommunityReviews/bourbon").hasAnyAuthority("Admin");
         http.authorizeRequests().anyRequest().authenticated();
         //http.authorizeRequests().anyRequest().permitAll();
-        http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
+        http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean(), refreshService));
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
