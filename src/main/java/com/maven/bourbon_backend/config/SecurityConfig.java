@@ -42,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.authorizeRequests().antMatchers("/BourbonCommunityReviews/profile/refresh").permitAll();
         http.authorizeRequests().antMatchers("/BourbonCommunityReviews/profile/logout").permitAll();
+        http.authorizeRequests().antMatchers("/BourbonCommunityReviews/profile/new").permitAll();
         http.authorizeRequests().antMatchers("/BourbonCommunityReviews/bourbon").permitAll();
         http.authorizeRequests().antMatchers(GET, "/BourbonCommunityReviews/profile").hasAnyAuthority("User");
         http.authorizeRequests().antMatchers(GET, "/BourbonCommunityReviews/bourbon").hasAnyAuthority("Admin");

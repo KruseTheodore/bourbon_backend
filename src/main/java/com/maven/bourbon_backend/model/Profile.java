@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 @Document
@@ -34,7 +35,14 @@ public class Profile {
         this.name = name;
         this.password = password;
         this.bourbon_ids = bourbon_ids;
-        this.roles = roles;
+        if(roles == null){
+            Collection<Role> newRoles = new HashSet<Role>();
+            newRoles.add(new Role("1", "User"));
+            this.roles = newRoles;
+        }
+        else{
+            this.roles = roles;
+        }
     }
 
     public String getPassword() {

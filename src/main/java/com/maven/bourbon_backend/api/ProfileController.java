@@ -43,7 +43,7 @@ public class ProfileController {
     public void addRole(@RequestBody Role role){
         profileService.addRole(role);
     }
-    @PostMapping
+    @PostMapping(path = "/new")
     public void addProfile(@RequestBody Profile profile){
         profileService.addProfile(profile);
     }
