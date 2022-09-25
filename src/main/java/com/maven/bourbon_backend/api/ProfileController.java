@@ -20,8 +20,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.springframework.http.HttpHeaders.ACCESS_CONTROL_REQUEST_HEADERS;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpHeaders.*;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -75,7 +74,7 @@ public class ProfileController {
 
     @GetMapping(path = "/refresh")
     public void refreshAuth(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String authorizationHeader = request.getHeader(AUTHORIZATION);
+        String authorizationHeader = request.getHeader(IF_MATCH);
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try{
                 String  refresh_string = authorizationHeader.substring("Bearer ".length());
@@ -120,7 +119,7 @@ public class ProfileController {
 
     @GetMapping(path = "/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        String authorizationHeader = request.getHeader(ACCESS_CONTROL_REQUEST_HEADERS);
+        String authorizationHeader = request.getHeader(IF_NONE_MATCH);
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
                 String  refresh_string = authorizationHeader.substring("Bearer ".length());
                 RefreshToken refreshToken = new RefreshToken(refresh_string);
