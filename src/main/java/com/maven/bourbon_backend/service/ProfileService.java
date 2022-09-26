@@ -5,6 +5,7 @@ import com.maven.bourbon_backend.model.Role;
 import com.maven.bourbon_backend.repositories.ProfileRepository;
 import com.maven.bourbon_backend.model.Profile;
 import com.maven.bourbon_backend.repositories.RoleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -35,6 +36,7 @@ public class ProfileService implements UserDetailsService {
         return new User(profile.getName(), profile.getPassword(), authorities);
     }
 
+    @Autowired
     public ProfileService(@Qualifier("MongoProfile") ProfileRepository profileRepository, @Qualifier("MongoRole") RoleRepository roleRepository, BourbonService bourbonService, PasswordEncoder passwordEncoder) {
         this.profileRepository = profileRepository;
         this.roleRepository = roleRepository;

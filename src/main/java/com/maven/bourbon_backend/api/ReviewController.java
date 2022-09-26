@@ -4,6 +4,7 @@ import com.maven.bourbon_backend.model.Bourbon;
 import com.maven.bourbon_backend.model.Profile;
 import com.maven.bourbon_backend.model.Review;
 import com.maven.bourbon_backend.service.ReviewService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -16,6 +17,7 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
+    @Autowired
     public ReviewController(ReviewService reviewService) {
         this.reviewService = reviewService;
     }
