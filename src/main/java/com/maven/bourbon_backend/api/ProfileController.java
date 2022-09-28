@@ -132,5 +132,21 @@ public class ProfileController {
         }
     }
 
+    @GetMapping(path = "/byname/{name}")
+    public Profile getProfileByName(@PathVariable String name){
+        return profileService.getProfileByName(name);
+    }
+
+    @GetMapping(path = "/check/{name}")
+    public boolean checkProfileByName(@PathVariable String name){
+        if (profileService.getProfileByName(name) == null){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
 
 }
