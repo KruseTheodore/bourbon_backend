@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,11 @@ public class ReviewService {
 
     public void addReview(Review review){
         reviewRepository.save(review);
+        String id = review.getBourbon_id();
+        Double rating = this.getBourbonRating(id);
+        Bourbon bourbon = this.bourbonService.getBourbonByName(id).orElse(null);
+        bourbon.setRating(rating);
+        this.bourbonService.updateBourbonById(id, bourbon);
     }
 
     public List<Review> getAllReviews(){
@@ -59,6 +65,15 @@ public class ReviewService {
 
     public List<Review> getAllReviewsByBourbon(String bourbon_name){
         return reviewRepository.findAllReviewsByBourbon(bourbon_name);
+    }
+
+    public Double getBourbonRating(String bourbon_name){
+       List<Review> reviews = this.getAllReviewsByBourbon(bourbon_name);
+       int count = 0;
+       List<Double> ratings = new ArrayList<>();
+       reviews.forEach(review -> ratings.add(review.getRating()));
+       Double rating = ratings.stream().mapToDouble(r -> r).average().orElse(0.0);
+       return rating;
     }
 
 

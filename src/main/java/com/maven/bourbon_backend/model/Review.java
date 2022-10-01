@@ -32,7 +32,6 @@ public class Review {
     @Field("Bourbon_id")
     private String Bourbon_id;
 
-    public Review(){}
 
     public Review(@JsonProperty("id") String id,
                   @JsonProperty("name") String name,

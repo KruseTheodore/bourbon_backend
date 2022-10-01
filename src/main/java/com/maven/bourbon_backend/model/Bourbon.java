@@ -14,8 +14,9 @@ public class Bourbon {
     private String distil;
     @Field
     private Double proof;
+    @Field
+    private Double rating;
 
-    public Bourbon(){}
 
     public Bourbon(@JsonProperty("name") String name,
                    @JsonProperty("distil") String distil,
@@ -49,4 +50,11 @@ public class Bourbon {
         this.proof = proof;
     }
 
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
 }
