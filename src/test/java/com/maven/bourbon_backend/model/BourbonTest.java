@@ -69,4 +69,25 @@ class BourbonTest {
         //then
         assertThat(bourbon.getProof()).isEqualTo(101.0);
     }
+
+    @Test
+    void canGetRating() {
+        //given bourbon = new Bourbon("testName", "testDistil", 100.0);
+        bourbon.setRating(4.5);
+        //when
+        Double rating = bourbon.getRating();
+        //then
+        assertThat(rating).isEqualTo(4.5);
+    }
+
+    @Test
+    void canSetRating() {
+        //given bourbon = new Bourbon("testName", "testDistil", 100.0);
+        //when
+        bourbon.setRating(4.0);
+        //then
+        assertThat(bourbon.getRating()).isEqualTo(4.0);
+    }
+
+
 }
