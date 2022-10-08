@@ -86,4 +86,19 @@ public class ProfileService implements UserDetailsService {
         return profileRepository.findByName(name);
     }
 
+    public void addFollow(String name, String followName) {
+        List<String> followed = new ArrayList<>();
+        System.out.println(followName);
+        Profile profile = this.getProfileByName(name);
+        if(profile.getFollowed_names() != null){
+            followed = profile.getFollowed_names();
+        }
+        else {
+            profile.setFollowed_names(followed);
+        }
+        followed.add(followName);
+        profile.setFollowed_names(followed);
+        this.updateProfileById(profile.getId(), profile);
+    }
+
 }

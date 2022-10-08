@@ -22,6 +22,8 @@ public class Profile {
     private List<String> bourbon_ids;
     @Field
     private Collection<Role> roles;
+    @Field("followed_names")
+    private List<String> followed_names;
 
 
     public Profile(){}
@@ -43,6 +45,14 @@ public class Profile {
         else{
             this.roles = roles;
         }
+    }
+
+    public List<String> getFollowed_names() {
+        return followed_names;
+    }
+
+    public void setFollowed_names(List<String> followed_names) {
+        this.followed_names = followed_names;
     }
 
     public String getPassword() {

@@ -148,5 +148,11 @@ public class ProfileController {
 
     }
 
+    @PostMapping(path = "/follow/{name}/{followName}")
+    public void addFollow(@PathVariable String name, @PathVariable String followName){
+        System.out.println(name);
+        profileService.addFollow(name, followName);
+    }
+
 
 }
