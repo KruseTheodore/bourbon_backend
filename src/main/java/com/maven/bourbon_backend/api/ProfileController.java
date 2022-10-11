@@ -150,8 +150,22 @@ public class ProfileController {
 
     @PostMapping(path = "/follow/{name}/{followName}")
     public void addFollow(@PathVariable String name, @PathVariable String followName){
-        System.out.println(name);
         profileService.addFollow(name, followName);
+    }
+
+    @DeleteMapping(path = "/unfollow/{name}/{followName}")
+    public void deleteFollow(@PathVariable String name, @PathVariable String followName){
+        profileService.deleteFollow(name, followName);
+    }
+
+    @PostMapping(path = "/bourbon/{name}/{bourbonName}")
+    public void addBourbon(@PathVariable String name, @PathVariable String bourbonName){
+        profileService.addBourbon(name, bourbonName);
+    }
+
+    @DeleteMapping(path = "/unbourbon/{name}/{bourbonName}")
+    public void deleteBourbon(@PathVariable String name, @PathVariable String bourbonName){
+        profileService.deleteBourbon(name, bourbonName);
     }
 
 

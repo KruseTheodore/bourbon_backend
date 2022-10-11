@@ -88,7 +88,6 @@ public class ProfileService implements UserDetailsService {
 
     public void addFollow(String name, String followName) {
         List<String> followed = new ArrayList<>();
-        System.out.println(followName);
         Profile profile = this.getProfileByName(name);
         if(profile.getFollowed_names() != null){
             followed = profile.getFollowed_names();
@@ -98,6 +97,42 @@ public class ProfileService implements UserDetailsService {
         }
         followed.add(followName);
         profile.setFollowed_names(followed);
+        this.updateProfileById(profile.getId(), profile);
+    }
+
+    public void deleteFollow(String name, String followName) {
+        List<String> followed = new ArrayList<>();
+        Profile profile = this.getProfileByName(name);
+        if(profile.getFollowed_names() != null){
+            followed = profile.getFollowed_names();
+            followed.remove(followName);
+        }
+        profile.setFollowed_names(followed);
+        this.updateProfileById(profile.getId(), profile);
+    }
+
+    public void addBourbon(String name, String bourbonName) {
+        List<String> bourbons = new ArrayList<>();
+        Profile profile = this.getProfileByName(name);
+        if(profile.getBourbon_ids() != null){
+            bourbons = profile.getBourbon_ids();
+        }
+        else {
+            profile.setBourbon_ids(bourbons);
+        }
+        bourbons.add(bourbonName);
+        profile.setBourbon_ids(bourbons);
+        this.updateProfileById(profile.getId(), profile);
+    }
+
+    public void deleteBourbon(String name, String bourbonName) {
+        List<String> bourbons = new ArrayList<>();
+        Profile profile = this.getProfileByName(name);
+        if(profile.getBourbon_ids() != null){
+            bourbons = profile.getBourbon_ids();
+            bourbons.remove(bourbonName);
+        }
+        profile.setBourbon_ids(bourbons);
         this.updateProfileById(profile.getId(), profile);
     }
 
