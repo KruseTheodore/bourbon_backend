@@ -16,7 +16,7 @@ class MessageTest {
     }
 
     @Test
-    void getUserNameTo() {
+    void canGetUserNameTo() {
         //given message = new Message("testID", "user1", "user2", "Test Message.");
         //when
         String name = message.getUserNameTo();
@@ -25,7 +25,7 @@ class MessageTest {
     }
 
     @Test
-    void setUserNameTo() {
+    void canSetUserNameTo() {
         //given message = new Message("testID", "user1", "user2", "Test Message.");
         //when
         message.setUserNameTo("newUser");
@@ -34,7 +34,7 @@ class MessageTest {
     }
 
     @Test
-    void getUserNameFrom() {
+    void canGetUserNameFrom() {
         //given message = new Message("testID", "user1", "user2", "Test Message.");
         //when
         String name = message.getUserNameFrom();
@@ -43,7 +43,7 @@ class MessageTest {
     }
 
     @Test
-    void setUserNameFrom() {
+    void canSetUserNameFrom() {
         //given message = new Message("testID", "user1", "user2", "Test Message.");
         //when
         message.setUserNameFrom("newUser");
@@ -52,7 +52,7 @@ class MessageTest {
     }
 
     @Test
-    void getId() {
+    void canGetId() {
         //given message = new Message("testID", "user1", "user2", "Test Message.");
         //when
         String name = message.getId();
@@ -61,7 +61,7 @@ class MessageTest {
     }
 
     @Test
-    void setId() {
+    void canSetId() {
         //given message = new Message("testID", "user1", "user2", "Test Message.");
         //when
         message.setId("newUser");
@@ -70,7 +70,7 @@ class MessageTest {
     }
 
     @Test
-    void getMessage() {
+    void canGetMessage() {
         //given message = new Message("testID", "user1", "user2", "Test Message.");
         //when
         String name = message.getMessage();
@@ -79,7 +79,7 @@ class MessageTest {
     }
 
     @Test
-    void setMessage() {
+    void canSetMessage() {
         //given message = new Message("testID", "user1", "user2", "Test Message.");
         //when
         message.setMessage("newUser");
@@ -88,7 +88,7 @@ class MessageTest {
     }
 
     @Test
-    void getTimeStamp() {
+    void canGetTimeStamp() {
         //given message = new Message("testID", "user1", "user2", "Test Message.");
         //when
         message.setTimeStamp(341234);
@@ -97,7 +97,7 @@ class MessageTest {
     }
 
     @Test
-    void setTimeStamp() {
+    void canSetTimeStamp() {
         //given message = new Message("testID", "user1", "user2", "Test Message.");
         //when
         message.setTimeStamp(341234);

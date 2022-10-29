@@ -67,7 +67,7 @@ class MessageServiceTest {
     }
 
     @Test
-    void getMessagesByUserFrom() {
+    void canGetMessagesByUserFrom() {
         //given
         Message message = new Message("testID", "user1", "user2", "Test Message.");
         //when

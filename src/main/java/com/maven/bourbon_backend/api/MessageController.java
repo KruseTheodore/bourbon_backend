@@ -48,6 +48,7 @@ public class MessageController {
                 toRemove.add(message);
             }
         });
+        conversationFrom.removeAll(toRemove);
 
         conversationFrom.addAll(conversationTo);
 
