@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -50,8 +50,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/BourbonCommunityReviews/profile/new").permitAll();
         http.authorizeRequests().antMatchers("/BourbonCommunityReviews/profile/check/**").permitAll();
         //http.authorizeRequests().antMatchers("/BourbonCommunityReviews/bourbon").permitAll();
-        http.authorizeRequests().antMatchers(GET, "/BourbonCommunityReviews/profile").hasAnyAuthority("User");
-        http.authorizeRequests().antMatchers(GET, "/BourbonCommunityReviews/bourbon").hasAnyAuthority("User");
+        http.authorizeRequests().antMatchers(GET, "/BourbonCommunityReviews/profile").permitAll();
+        http.authorizeRequests().antMatchers(GET, "/BourbonCommunityReviews/bourbon/**").permitAll();
+        http.authorizeRequests().antMatchers(GET, "/BourbonCommunityReviews/review/**").permitAll();
+        http.authorizeRequests().antMatchers(GET, "/BourbonCommunityReviews/message").hasAnyAuthority("User");
+        http.authorizeRequests().antMatchers(POST, "/BourbonCommunityReviews/profile").hasAnyAuthority("User");
+        http.authorizeRequests().antMatchers(POST, "/BourbonCommunityReviews/bourbon").hasAnyAuthority("User");
+        http.authorizeRequests().antMatchers(POST, "/BourbonCommunityReviews/review").hasAnyAuthority("User");
+        http.authorizeRequests().antMatchers(POST, "/BourbonCommunityReviews/message").hasAnyAuthority("User");
+        http.authorizeRequests().antMatchers(PUT, "/BourbonCommunityReviews/bourbon").hasAnyAuthority("Admin");
+        http.authorizeRequests().antMatchers(DELETE, "/BourbonCommunityReviews/bourbon").hasAnyAuthority("Admin");
+        http.authorizeRequests().antMatchers(PUT, "/BourbonCommunityReviews/profile").hasAnyAuthority("User");
+        http.authorizeRequests().antMatchers(DELETE, "/BourbonCommunityReviews/profile").hasAnyAuthority("Admin");
+        http.authorizeRequests().antMatchers(POST, "/BourbonCommunityReviews/review").hasAnyAuthority("User");
+        http.authorizeRequests().antMatchers(PUT, "/BourbonCommunityReviews/review").hasAnyAuthority("User");
+        http.authorizeRequests().antMatchers(DELETE, "/BourbonCommunityReviews/review").hasAnyAuthority("User");
         http.authorizeRequests().anyRequest().authenticated();
         //http.authorizeRequests().anyRequest().permitAll();
         http.addFilter(customAuthenticationFilter);
