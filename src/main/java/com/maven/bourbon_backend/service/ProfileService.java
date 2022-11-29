@@ -120,7 +120,9 @@ public class ProfileService implements UserDetailsService {
         else {
             profile.setBourbon_ids(bourbons);
         }
-        bourbons.add(bourbonName);
+        if(!bourbons.contains(bourbonName)) {
+            bourbons.add(bourbonName);
+        }
         profile.setBourbon_ids(bourbons);
         this.updateProfileById(profile.getId(), profile);
     }
