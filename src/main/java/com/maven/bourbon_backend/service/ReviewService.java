@@ -30,7 +30,9 @@ public class ReviewService {
         String id = review.getBourbon_id();
         Double rating = this.getBourbonRating(id);
         Bourbon bourbon = this.bourbonService.getBourbonByName(id).orElse(null);
-        bourbon.setRating(rating);
+        if (bourbon != null) {
+            bourbon.setRating(rating);
+        }
         this.bourbonService.updateBourbonById(id, bourbon);
     }
 
